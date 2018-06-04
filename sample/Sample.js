@@ -1,9 +1,8 @@
 
 if( typeof module !== 'undefined' )
-require( 'wTools' );
+require( 'wexectools' );
 var _ = wTools;
 
 /**/
 
-...
-
+console.log( _.appArgs() );
