@@ -22,7 +22,7 @@ if( typeof module !== 'undefined' )
     require( toolsPath );
   }
 
-  var _ = wTools;
+  var _ = _global_.wTools;
 
   _.include( 'wPath' );
 
