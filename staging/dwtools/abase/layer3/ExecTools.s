@@ -5,27 +5,6 @@
 if( typeof module !== 'undefined' )
 {
 
-  if( typeof _global_ === 'undefined' || !_global_.wBase )
-  {
-    let toolsPath = '../../../dwtools/Base.s';
-    let toolsExternal = 0;
-    try
-    {
-      require.resolve( toolsPath );
-    }
-    catch( err )
-    {
-      toolsExternal = 1;
-      require( 'wTools' );
-    }
-    if( !toolsExternal )
-    require( toolsPath );
-  }
-
-  var _ = _global_.wTools;
-
-  _.include( 'wPath' );
-
   try
   {
     _global_.Esprima = require( 'esprima' );
@@ -1171,6 +1150,71 @@ function appExitWithBeep( exitCode )
   _.appExit( exitCode );
 }
 
+//
+
+var appRepairExitHandlerDone = 0;
+function appRepairExitHandler()
+{
+
+  _.assert( arguments.length === 0 );
+
+  if( appRepairExitHandlerDone )
+  return;
+  appRepairExitHandlerDone = 1;
+
+  // process.on( 'exit', function()
+  // {
+  //   debugger;
+  //   console.log( 'Tester : exiting . . .' );
+  // });
+
+  process.on( 'SIGINT',function()
+  {
+    console.log( 'SIGINT' );
+    try
+    {
+      process.exit();
+    }
+    catch( err )
+    {
+      console.log( err );
+      process.removeListener( 'exit' );
+      process.exit();
+    }
+  });
+
+  process.on( 'SIGUSR1',function()
+  {
+    console.log( 'SIGUSR1' );
+    try
+    {
+      process.exit();
+    }
+    catch( err )
+    {
+      console.log( err );
+      process.removeListener( 'exit' );
+      process.exit();
+    }
+  });
+
+  process.on( 'SIGUSR2',function()
+  {
+    console.log( 'SIGUSR2' );
+    try
+    {
+      process.exit();
+    }
+    catch( err )
+    {
+      console.log( err );
+      process.removeListener( 'exit' );
+      process.exit();
+    }
+  });
+
+}
+
 // --
 // prototype
 // --
@@ -1209,6 +1253,8 @@ var Proto =
   appExitCode : appExitCode,
   appExit : appExit,
   appExitWithBeep : appExitWithBeep,
+
+  appRepairExitHandler : appRepairExitHandler,
 
 }
 
