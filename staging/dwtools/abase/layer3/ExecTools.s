@@ -1199,7 +1199,7 @@ function appRepairExitHandler()
     catch( err )
     {
       console.log( err );
-      process.removeListener( 'exit' );
+      process.removeAllListeners( 'exit' );
       process.exit();
     }
   });
