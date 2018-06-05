@@ -263,6 +263,7 @@ function shell( test )
       _.include( 'wStringsExtra' );
       _.include( 'wStringer' );
       _.include( 'wPath' );
+      _.include( 'wExecTools' );
 
     }
 
