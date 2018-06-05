@@ -1120,6 +1120,8 @@ function appExitCode( status )
   _.assert( arguments.length === 0 || arguments.length === 1 );
   _.assert( status === undefined || _.numberIs( status ) );
 
+  debugger;
+
   if( _global.process )
   {
     result = process.exitCode;

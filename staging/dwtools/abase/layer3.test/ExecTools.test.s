@@ -237,7 +237,7 @@ function shell( test )
   {
     outputPiping : 1,
     outputCollecting : 1,
-    applyingExitCode : 1,
+    applyingExitCode : 0,
     throwingExitCode : 1
   }
 
@@ -322,8 +322,6 @@ function shell( test )
   .ifNoErrorThen( function()
   {
     /* mode : spawn, stdio : ignore */
-
-    debugger
 
     o.stdio = 'ignore';
     var options = _.mapSupplement( {}, o, commonDefaults );
@@ -574,7 +572,7 @@ function shell2( test )
   {
     outputPiping : 1,
     outputCollecting : 1,
-    applyingExitCode : 1,
+    applyingExitCode : 0,
     throwingExitCode : 1
   }
 
