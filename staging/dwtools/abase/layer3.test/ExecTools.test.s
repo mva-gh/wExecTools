@@ -31,6 +31,8 @@ if( typeof module !== 'undefined' )
   _.include( 'wTesting' );
   _.include( 'wFiles' );
 
+  require( '../layer3/ExecTools.s' );
+
 }
 
 var _ = _global_.wTools;
