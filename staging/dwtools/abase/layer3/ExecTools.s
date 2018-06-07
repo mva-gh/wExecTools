@@ -11,7 +11,7 @@ if( typeof module !== 'undefined' )
     let toolsExternal = 0;
     try
     {
-      require.resolve( toolsPath );
+      toolsPath = require.resolve( toolsPath );/*hhh*/
     }
     catch( err )
     {
@@ -22,7 +22,7 @@ if( typeof module !== 'undefined' )
     require( toolsPath );
   }
 
-  var _ = _global_.wTools;
+  var _global = _global_; var _ = _global_.wTools;
 
   _.include( 'wPath' );
 
@@ -40,7 +40,7 @@ var System, ChildProcess, Net, Stream;
 
 var _global = _global_;
 var Self = _global_.wTools;
-var _ = _global_.wTools;
+var _global = _global_; var _ = _global_.wTools;
 
 var _ArraySlice = Array.prototype.slice;
 var _FunctionBind = Function.prototype.bind;
@@ -366,7 +366,7 @@ function shellNode( o )
 
   /*
   1024*1024 for megabytes
-  1.5 factor found empirically for windows
+  1.4 factor found empirically for windows
       implementation of nodejs for other OSs could be able to use more memory
   */
 
@@ -376,7 +376,11 @@ function shellNode( o )
     var totalmem = System.totalmem();
     if( o.verbosity )
     logger.log( 'System.totalmem()',_.strMetricFormatBytes( totalmem ) );
-    var totalmem = Math.floor( ( totalmem / ( 1024*1024*1.5 ) - 1 ) / 256 ) * 256;
+    var totalmem;
+    if( totalmem < 1024*1024*1024 )
+    Math.floor( ( totalmem / ( 1024*1024*1.4 ) - 1 ) / 256 ) * 256;
+    else
+    Math.floor( ( totalmem / ( 1024*1024*1.1 ) - 1 ) / 256 ) * 256;
     argumentsForNode = '--expose-gc --stack-trace-limit=999 --max_old_space_size=' + totalmem;
   }
 
@@ -1124,9 +1128,9 @@ function appExitCode( status )
 
   if( _global.process )
   {
-    result = process.exitCode;
     if( status !== undefined )
     process.exitCode = status;
+    result = process.exitCode;
   }
 
   return result;
@@ -1288,7 +1292,7 @@ _.mapExtend( Self, Proto );
 // --
 
 if( typeof module !== 'undefined' )
-if( _global_._UsingWtoolsPrivately_ )
+if( _global_.WTOOLS_PRIVATE )
 delete require.cache[ module.id ];
 
 if( typeof module !== 'undefined' && module !== null )

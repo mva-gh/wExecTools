@@ -15,7 +15,7 @@ if( typeof module !== 'undefined' )
     let toolsExternal = 0;
     try
     {
-      require.resolve( toolsPath );
+      toolsPath = require.resolve( toolsPath );/*hhh*/
     }
     catch( err )
     {
@@ -26,7 +26,7 @@ if( typeof module !== 'undefined' )
     require( toolsPath );
   }
 
-  var _ = _global_.wTools;
+  var _global = _global_; var _ = _global_.wTools;
 
   _.include( 'wTesting' );
   _.include( 'wFiles' );
@@ -35,7 +35,7 @@ if( typeof module !== 'undefined' )
 
 }
 
-var _ = _global_.wTools;
+var _global = _global_; var _ = _global_.wTools;
 var Self = {};
 
 // --
@@ -257,7 +257,7 @@ function shell( test )
         require( 'wTools' );
       }
 
-      var _ = _global_.wTools;
+      var _global = _global_; var _ = _global_.wTools;
 
       _.include( 'wConsequence' );
       _.include( 'wStringsExtra' );
@@ -267,7 +267,7 @@ function shell( test )
 
     }
 
-    var _ = _global_.wTools;
+    var _global = _global_; var _ = _global_.wTools;
 
     var args = _.appArgs();
     var con = new _.Consequence().give();
@@ -592,7 +592,7 @@ function shell2( test )
         require( 'wTools' );
       }
 
-      var _ = _global_.wTools;
+      var _global = _global_; var _ = _global_.wTools;
 
       _.include( 'wConsequence' );
       _.include( 'wStringsExtra' );
@@ -601,7 +601,7 @@ function shell2( test )
 
     }
 
-    var _ = _global_.wTools;
+    var _global = _global_; var _ = _global_.wTools;
 
     var con = new _.Consequence().give();
     con.timeOutThen( _.numberRandomInt( [ 300, 2000 ] ), function()
