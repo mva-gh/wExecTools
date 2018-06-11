@@ -903,6 +903,26 @@ execStages.defaults =
   onEnd : null,
 }
 
+//
+
+function moduleRequire( filePath )
+{
+  _.assert( arguments.length === 1 );
+
+  if( typeof require !== 'undefined' )
+  {
+    debugger;
+    return require( filePath )
+  }
+  else
+  {
+    var script = document.createElement( 'script' );
+    script.src = filePath;
+    document.head.appendChild( script );
+  }
+
+}
+
 // --
 //
 // --
@@ -1268,6 +1288,8 @@ var Proto =
   makeWorker : makeWorker,
 
   execStages : execStages, /* experimental */
+
+  moduleRequire : moduleRequire,
 
 
   //
