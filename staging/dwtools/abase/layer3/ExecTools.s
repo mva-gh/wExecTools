@@ -904,45 +904,54 @@ execStages.defaults =
 }
 
 //
-
-function moduleRequire( filePath )
-{
-  _.assert( arguments.length === 1 );
-
-  if( typeof require !== 'undefined' )
-  {
-    debugger;
-    return require( filePath )
-  }
-  else
-  {
-    var script = document.createElement( 'script' );
-    script.src = filePath;
-    document.head.appendChild( script );
-  }
-
-}
+//
+// function moduleRequire( filePath )
+// {
+//   _.assert( arguments.length === 1 );
+//
+//   if( typeof require !== 'undefined' )
+//   {
+//     debugger;
+//     return require( filePath )
+//   }
+//   else
+//   {
+//     var script = document.createElement( 'script' );
+//     script.src = filePath;
+//     document.head.appendChild( script );
+//   }
+//
+// }
 
 // --
 //
 // --
 
-var _appArgsInSubjectAndMapFormatResult;
-function appArgsInSubjectAndMapFormat( o )
+var _appArgsInSamFormatCache;
+var _appArgsInSamFormat = Object.create( null )
+var defaults = _appArgsInSamFormat.defaults = Object.create( null );
+
+defaults.delimeter = ':';
+defaults.argv = null;
+defaults.caching = true;
+
+//
+
+function _appArgsInSamFormatNodejs( o )
 {
 
   _.assert( arguments.length === 0 || arguments.length === 1 );
-  o = _.routineOptions( appArgsInSubjectAndMapFormat,arguments );
+  o = _.routineOptions( _appArgsInSamFormatNodejs,arguments );
 
   if( o.caching )
-  if( _appArgsInSubjectAndMapFormatResult && o.delimeter === _appArgsInSubjectAndMapFormatResult.delimeter )
-  return _appArgsInSubjectAndMapFormatResult;
+  if( _appArgsInSamFormatCache && o.delimeter === _appArgsInSamFormatCache.delimeter )
+  return _appArgsInSamFormatCache;
 
   var result = Object.create( null );
 
   if( o.caching )
-  if( o.delimeter === appArgsInSubjectAndMapFormat.defaults.delimeter )
-  _appArgsInSubjectAndMapFormatResult = result;
+  if( o.delimeter === _appArgsInSamFormatNodejs.defaults.delimeter )
+  _appArgsInSamFormatCache = result;
 
   if( _global.process )
   {
@@ -1020,12 +1029,33 @@ function appArgsInSubjectAndMapFormat( o )
   return result;
 }
 
-appArgsInSubjectAndMapFormat.defaults =
+_appArgsInSamFormatNodejs.defaults = Object.create( _appArgsInSamFormat.defaults );
+
+//
+
+function _appArgsInSamFormatBrowser( o )
 {
-  delimeter : ':',
-  argv : null,
-  caching : true
+  debugger; xxx
+
+  _.assert( arguments.length === 0 || arguments.length === 1 );
+  o = _.routineOptions( _appArgsInSamFormatNodejs,arguments );
+
+  if( o.caching )
+  if( _appArgsInSamFormatCache && o.delimeter === _appArgsInSamFormatCache.delimeter )
+  return _appArgsInSamFormatCache;
+
+  var result = Object.create( null );
+
+  if( o.caching )
+  if( o.delimeter === _appArgsInSamFormatNodejs.defaults.delimeter )
+  _appArgsInSamFormatCache = result;
+
+  xxx
+
+  return result;
 }
+
+_appArgsInSamFormatBrowser.defaults = Object.create( _appArgsInSamFormat.defaults );
 
 //
 
@@ -1289,13 +1319,14 @@ var Proto =
 
   execStages : execStages, /* experimental */
 
-  moduleRequire : moduleRequire,
-
 
   //
 
-  appArgsInSubjectAndMapFormat : appArgsInSubjectAndMapFormat,
-  appArgs : appArgsInSubjectAndMapFormat,
+  _appArgsInSamFormatNodejs : _appArgsInSamFormatNodejs,
+  _appArgsInSamFormatBrowser : _appArgsInSamFormatBrowser,
+
+  appArgsInSamFormat : Config.platform === 'nodejs' ? _appArgsInSamFormatNodejs : _appArgsInSamFormatBrowser,
+  appArgs : Config.platform === 'nodejs' ? _appArgsInSamFormatNodejs : _appArgsInSamFormatBrowser,
   appArgsReadTo : appArgsReadTo,
 
   appAnchor : appAnchor,
