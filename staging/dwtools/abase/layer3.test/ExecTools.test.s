@@ -769,8 +769,8 @@ var Proto =
   name : 'ExecTools',
   silencing : 1,
 
-  onSuitBegin : testDirMake,
-  onSuitEnd : cleanTestDir,
+  onSuiteBegin : testDirMake,
+  onSuiteEnd : cleanTestDir,
 
   context :
   {
@@ -795,7 +795,7 @@ _.mapExtend( Self,Proto );
 
 //
 
-Self = wTestSuit( Self );
+Self = wTestSuite( Self );
 
 if( typeof module !== 'undefined' && !module.parent )
 _.Tester.test( Self )

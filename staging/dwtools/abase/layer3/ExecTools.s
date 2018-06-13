@@ -1294,7 +1294,7 @@ function appRepairExitHandler()
 }
 
 // --
-// prototype
+// define class
 // --
 
 var Proto =
