@@ -50,7 +50,7 @@ var _ObjectHasOwnProperty = Object.hasOwnProperty;
 var _assert = _.assert;
 var _arraySlice = _.arraySlice;
 
-_.assert( _globalReal_ );
+_.assert( _realGlobal_ );
 
 // --
 // exec
@@ -524,7 +524,7 @@ function routineMake( o )
   _.routineOptions( routineMake,o );
   _.assert( arguments.length === 1 );
   _.assert( _.objectIs( o.externals ) || o.externals === null );
-  _.assert( _globalReal_ );
+  _.assert( _realGlobal_ );
 
   /* prefix */
 
@@ -539,12 +539,12 @@ function routineMake( o )
 
   if( o.externals )
   {
-    if( !_globalReal_.__wTools__externals__ )
-    _globalReal_.__wTools__externals__ = [];
-    _globalReal_.__wTools__externals__.push( o.externals );
+    if( !_realGlobal_.__wTools__externals__ )
+    _realGlobal_.__wTools__externals__ = [];
+    _realGlobal_.__wTools__externals__.push( o.externals );
     prefix += '\n';
     for( e in o.externals )
-    prefix += 'var ' + e + ' = ' + '_globalReal_.__wTools__externals__[ ' + String( _globalReal_.__wTools__externals__.length-1 ) + ' ].' + e + ';\n';
+    prefix += 'var ' + e + ' = ' + '_realGlobal_.__wTools__externals__[ ' + String( _realGlobal_.__wTools__externals__.length-1 ) + ' ].' + e + ';\n';
     prefix += '\n';
   }
 
@@ -1237,12 +1237,6 @@ function appRepairExitHandler()
   if( appRepairExitHandlerDone )
   return;
   appRepairExitHandlerDone = 1;
-
-  // process.on( 'exit', function()
-  // {
-  //   debugger;
-  //   console.log( 'Tester : exiting . . .' );
-  // });
 
   process.on( 'SIGINT',function()
   {
