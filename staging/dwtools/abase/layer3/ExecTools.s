@@ -904,24 +904,24 @@ execStages.defaults =
 }
 
 //
-//
-// function moduleRequire( filePath )
-// {
-//   _.assert( arguments.length === 1 );
-//
-//   if( typeof require !== 'undefined' )
-//   {
-//     debugger;
-//     return require( filePath )
-//   }
-//   else
-//   {
-//     var script = document.createElement( 'script' );
-//     script.src = filePath;
-//     document.head.appendChild( script );
-//   }
-//
-// }
+
+function moduleRequire( filePath )
+{
+  _.assert( arguments.length === 1 );
+
+  if( typeof require !== 'undefined' )
+  {
+    debugger;
+    return require( filePath )
+  }
+  else
+  {
+    var script = document.createElement( 'script' );
+    script.src = filePath;
+    document.head.appendChild( script );
+  }
+
+}
 
 // --
 //
@@ -1296,7 +1296,6 @@ var Proto =
   shellNode : shellNode,
   shellNodePassingThrough : shellNodePassingThrough,
 
-
   //
 
   routineSourceGet : routineSourceGet,
@@ -1309,8 +1308,7 @@ var Proto =
   execInWorker : execInWorker,
   makeWorker : makeWorker,
 
-  execStages : execStages, /* experimental */
-
+  execStages : execStages,
 
   //
 
