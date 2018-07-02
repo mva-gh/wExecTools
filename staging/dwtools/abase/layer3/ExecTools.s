@@ -63,7 +63,7 @@ function shell( o )
   o = { path : o };
 
   _.routineOptions( shell,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.accessorForbid( o,'child' );
   _.accessorForbid( o,'returnCode' );
 
@@ -362,7 +362,7 @@ function shellNode( o )
   _.assert( !o.code );
   _.accessorForbid( o,'child' );
   _.accessorForbid( o,'returnCode' );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   /*
   1024*1024 for megabytes
@@ -432,7 +432,7 @@ function shellNodePassingThrough( o )
   o = { path : o }
 
   _.routineOptions( shellNodePassingThrough,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   var result = _.shellNode( o );
 
   return result;
@@ -458,7 +458,7 @@ function routineSourceGet( o )
   o = { routine : o };
 
   _.routineOptions( routineSourceGet,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.routineIs( o.routine ) );
 
   var result = o.routine.toSource ? o.routine.toSource() : o.routine.toString();
@@ -522,7 +522,7 @@ function routineMake( o )
   o = { code : o };
 
   _.routineOptions( routineMake,o );
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.objectIs( o.externals ) || o.externals === null );
   _.assert( _realGlobal_ );
 
@@ -654,7 +654,7 @@ function routineExec( o )
 
   if( _.strIs( o ) )
   o = { code : o };
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.routineOptions( routineExec,o );
 
   o.routine = routineMake
@@ -701,7 +701,7 @@ routineExec.defaults.__proto__ = routineMake.defaults;
 
 function exec( o )
 {
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   if( _.strIs( o ) )
   o = { code : o };
   routineExec( o );
@@ -722,7 +722,7 @@ function execInWorker( o )
 
   if( _.strIs( o ) )
   o = { code : o };
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.routineOptions( execInWorker,o );
 
   var blob = new Blob( [ o.code ], { type : 'text/javascript' } );
@@ -745,7 +745,7 @@ function makeWorker( o )
 
   if( _.strIs( o ) )
   o = { code : o };
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
   _.routineOptions( makeWorker,o );
 
   var blob = new Blob( [ o.code ], { type : 'text/javascript' } );
@@ -907,7 +907,7 @@ execStages.defaults =
 
 function moduleRequire( filePath )
 {
-  _.assert( arguments.length === 1 );
+  _.assert( arguments.length === 1, 'expects single argument' );
 
   if( typeof require !== 'undefined' )
   {

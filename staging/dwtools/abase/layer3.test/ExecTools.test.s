@@ -26,7 +26,7 @@ if( typeof module !== 'undefined' )
     require( toolsPath );
   }
 
-  var _global = _global_; var _ = _global_.wTools;
+  var _ = _global_.wTools;
 
   _.include( 'wTesting' );
   _.include( 'wFiles' );
@@ -766,7 +766,7 @@ shell2.timeOut = 30000;
 var Proto =
 {
 
-  name : 'ExecTools',
+  name : 'Tools/base/layer3/Exec',
   silencing : 1,
 
   onSuiteBegin : testDirMake,
