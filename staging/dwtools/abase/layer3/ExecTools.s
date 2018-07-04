@@ -387,7 +387,7 @@ function shellNode( o )
   var path = _.fileProvider.pathNativize( o.path );
   path = _.strConcat( 'node',argumentsForNode,path );
 
-  var shellOptions = _.mapScreen( _.shell.defaults,o );
+  var shellOptions = _.mapOnly( o, _.shell.defaults );
   shellOptions.path = path;
 
   var result = _.shell( shellOptions )

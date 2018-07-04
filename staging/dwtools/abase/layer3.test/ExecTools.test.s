@@ -84,7 +84,7 @@ function appArgs( test )
     scriptArgs : [],
     scriptString : '',
   }
-  test.contain( got, expected );
+  test.contains( got, expected );
   got = null;
 
 
@@ -103,7 +103,7 @@ function appArgs( test )
     scriptArgs : [''],
     scriptString : '',
   }
-  test.contain( got, expected );
+  test.contains( got, expected );
 
 
   /* */
@@ -121,7 +121,7 @@ function appArgs( test )
     subject : '',
     scriptArgs : [ 'x', ':', 'aa', 'bbb', ':' ]
   }
-  test.contain( got, expected );
+  test.contains( got, expected );
 
   // logger.log( _.toStr( got.scriptArgs ) )
 
@@ -140,7 +140,7 @@ function appArgs( test )
     subject : '',
     scriptArgs :[ 'x', ':', 'y' ]
   }
-  test.contain( got, expected );
+  test.contains( got, expected );
 
   /* */
 
@@ -157,7 +157,7 @@ function appArgs( test )
     subject : '',
     scriptArgs : [ 'x', ':', 'y', 'x', ':', '1' ]
   }
-  test.contain( got, expected );
+  test.contains( got, expected );
 
   /* */
 
@@ -174,7 +174,7 @@ function appArgs( test )
     subject : 'a b c d',
     scriptArgs : [ 'a b c d', 'x', ':', 'y', 'xyz', 'y', ':', 1 ]
   }
-  test.contain( got, expected );
+  test.contains( got, expected );
 
   /* */
 
@@ -207,7 +207,7 @@ function appArgs( test )
       'e', ':', 5
     ]
   }
-  test.contain( got, expected );
+  test.contains( got, expected );
 
   /* */
 
@@ -224,7 +224,7 @@ function appArgs( test )
     subject : '',
     scriptArgs : [ 'a', ':', 'b', ':', 'c', ':', 'd', 'x', ':', 0, 'y', ':', 1 ]
   }
-  test.contain( got, expected );
+  test.contains( got, expected );
 }
 
 //
