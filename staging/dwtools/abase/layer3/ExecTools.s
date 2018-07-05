@@ -1178,6 +1178,8 @@ function appExitCode( status )
   if( _global.process )
   {
     if( status !== undefined )
+    debugger;
+    if( status !== undefined )
     process.exitCode = status;
     result = process.exitCode;
   }
