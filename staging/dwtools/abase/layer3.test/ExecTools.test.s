@@ -277,7 +277,7 @@ function shell( test )
       process.exit( args.map.exitWithCode )
 
       if( args.map.loop )
-      while( 1 )
+      while( true )
       {
       }
 
