@@ -1104,6 +1104,14 @@ function appArgsReadTo( o )
     }
   }
 
+  if( o.only )
+  {
+    var but = Object.keys( _.mapBut( o.appArgs.map, o.nameMap ) );
+    if( but.length )
+    throw _.err( 'Unknown application arguments : ' + _.strQuote( but ).join( ', ' ) );
+  }
+
+  return o.appArgs;
 }
 
 appArgsReadTo.defaults =
@@ -1112,6 +1120,7 @@ appArgsReadTo.defaults =
   appArgs : null,
   nameMap : null,
   removing : 1,
+  only : 0,
 }
 
 //
