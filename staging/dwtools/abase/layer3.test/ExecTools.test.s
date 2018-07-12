@@ -297,7 +297,7 @@ function shell( test )
 
   con.doThen( function()
   {
-    test.description = 'mode : spawn';
+    test.case = 'mode : spawn';
 
     o =
     {
@@ -350,7 +350,7 @@ function shell( test )
   // })
   .ifNoErrorThen( function()
   {
-    test.description = 'mode : shell';
+    test.case = 'mode : shell';
 
     o =
     {
@@ -404,7 +404,7 @@ function shell( test )
   // })
   .ifNoErrorThen( function()
   {
-    test.description = 'spawn, stop process using kill';
+    test.case = 'spawn, stop process using kill';
 
     o =
     {
@@ -434,7 +434,7 @@ function shell( test )
   })
   .ifNoErrorThen( function()
   {
-    test.description = 'shell, stop process using kill';
+    test.case = 'shell, stop process using kill';
 
     o =
     {
@@ -463,7 +463,7 @@ function shell( test )
   })
   .ifNoErrorThen( function()
   {
-    test.description = 'spawn, return good code';
+    test.case = 'spawn, return good code';
 
     o =
     {
@@ -479,7 +479,7 @@ function shell( test )
   })
   .ifNoErrorThen( function()
   {
-    test.description = 'spawn, return bad code';
+    test.case = 'spawn, return bad code';
 
     o =
     {
@@ -495,7 +495,7 @@ function shell( test )
   })
   .ifNoErrorThen( function()
   {
-    test.description = 'shell, return good code';
+    test.case = 'shell, return good code';
 
     o =
     {
@@ -511,7 +511,7 @@ function shell( test )
   })
   .ifNoErrorThen( function()
   {
-    test.description = 'shell, return bad code';
+    test.case = 'shell, return bad code';
 
     o =
     {
@@ -526,31 +526,31 @@ function shell( test )
     .doThen( () => test.identical( options.exitCode, 1 ) );
   })
   //
-  // test.description = 'test';
+  // test.case = 'test';
   // test.identical( 0, 0 );
 
   // con
   // .ifNoErrorThen( function()
   // {
-  //   test.description = 'simple command';
+  //   test.case = 'simple command';
   //   var con = _.shell( 'exit' );
   //   return test.shouldMessageOnlyOnce( con );
   // })
   // .ifNoErrorThen( function()
   // {
-  //   test.description = 'bad command, shell';
+  //   test.case = 'bad command, shell';
   //   var con = _.shell({ code : 'xxx', throwingExitCode : 1, mode : 'shell' });
   //   return test.shouldThrowErrorSync( con );
   // })
   // .ifNoErrorThen( function()
   // {
-  //   test.description = 'bad command, spawn';
+  //   test.case = 'bad command, spawn';
   //   var con = _.shell({ code : 'xxx', throwingExitCode : 1, mode : 'spawn' });
   //   return test.shouldThrowErrorSync( con );
   // })
   // .ifNoErrorThen( function()
   // {
-  //   test.description = 'several arguments';
+  //   test.case = 'several arguments';
   //   var con = _.shell( 'echo echo something' );
   //   return test.mustNotThrowError( con );
   // })
@@ -622,7 +622,7 @@ function shell2( test )
 
   con.doThen( function()
   {
-    test.description = 'mode : shell';
+    test.case = 'mode : shell';
 
     o =
     {
@@ -650,7 +650,7 @@ function shell2( test )
 
   con.doThen( function()
   {
-    test.description = 'mode : shell, passingThrough : true, no args';
+    test.case = 'mode : shell, passingThrough : true, no args';
 
     o =
     {
@@ -679,7 +679,7 @@ function shell2( test )
 
   con.doThen( function()
   {
-    test.description = 'mode : spawn, passingThrough : true, only filePath in args';
+    test.case = 'mode : spawn, passingThrough : true, only filePath in args';
 
     o =
     {
@@ -709,7 +709,7 @@ function shell2( test )
 
   con.doThen( function()
   {
-    test.description = 'mode : spawn, passingThrough : true, incorrect usage of o.path in spawn mode';
+    test.case = 'mode : spawn, passingThrough : true, incorrect usage of o.path in spawn mode';
 
     o =
     {
@@ -730,7 +730,7 @@ function shell2( test )
 
   con.doThen( function()
   {
-    test.description = 'mode : shell, passingThrough : true';
+    test.case = 'mode : shell, passingThrough : true';
 
     o =
     {
