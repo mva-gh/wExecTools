@@ -123,10 +123,11 @@ function shell( o )
 
   if( o.verbosity )
   {
-    if( o.args )
-    logger.log( o.path, o.args.join( ' ' ) );
-    else
-    logger.log( o.path );
+    logger.log( _.strConcat( _.arrayAppendArray( [ ' >', o.path ], o.args || [] ) ) );
+    // if( o.args )
+    // logger.log( o.path, o.args.join( ' ' ) );
+    // else
+    // logger.log( o.path );
   }
 
   /* create process */
@@ -385,7 +386,7 @@ function shellNode( o )
   }
 
   var path = _.fileProvider.pathNativize( o.path );
-  path = _.strConcat( 'node',argumentsForNode,path );
+  path = _.strConcat([ 'node', argumentsForNode, path ]);
 
   var shellOptions = _.mapOnly( o, _.shell.defaults );
   shellOptions.path = path;
