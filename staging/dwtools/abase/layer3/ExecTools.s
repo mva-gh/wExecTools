@@ -123,7 +123,9 @@ function shell( o )
 
   if( o.verbosity )
   {
+    // debugger;
     logger.log( _.strConcat( _.arrayAppendArray( [ ' >', o.path ], o.args || [] ) ) );
+    // debugger;
     // if( o.args )
     // logger.log( o.path, o.args.join( ' ' ) );
     // else
@@ -784,7 +786,7 @@ function execStages( stages,o )
 {
   var o = o || Object.create( null );
 
-  _.routineOptionsWithUndefines( execStages,o );
+  _.routineOptionsPreservingUndefines( execStages,o );
 
   o.stages = stages;
 
@@ -798,6 +800,9 @@ function execStages( stages,o )
   {
 
     var routine = stages[ s ];
+
+    if( o.onRoutine )
+    routine = o.onRoutine( routine );
 
     _.assert( routine || routine === null,'execStages :','#'+s,'stage is not defined' );
     _.assert( _.routineIs( routine ) || routine === null,'execStages :','stage','#'+s,'does not have routine to execute' );
@@ -858,8 +863,12 @@ function execStages( stages,o )
 
     /* arguments */
 
+    iteration.stage = stage;
+    if( o.onRoutine )
+    iteration.routine = o.onRoutine( stage );
+    else
     iteration.routine = stage;
-    iteration.routine = _.routineJoin( o.context,iteration.routine,o.args );
+    iteration.routine = _.routineJoin( o.context, iteration.routine, o.args );
 
     function routineCall()
     {
@@ -871,7 +880,7 @@ function execStages( stages,o )
 
     if( o.onEachRoutine )
     {
-      con.ifNoErrorThen( _.routineSeal( o.context,o.onEachRoutine,[ iteration.routine,iteration,o ] ) );
+      con.ifNoErrorThen( _.routineSeal( o.context, o.onEachRoutine, [ iteration.stage, iteration, o ] ) );
     }
 
     if( !o.manual )
@@ -902,6 +911,7 @@ execStages.defaults =
   onEachRoutine : null,
   onBegin : null,
   onEnd : null,
+  onRoutine : null,
 }
 
 //

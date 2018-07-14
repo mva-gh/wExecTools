@@ -2,7 +2,7 @@
   "name": "wexectools",
   "version": "0.3.26",
   "description": "Tools for code execution",
-  "author": "Kostiantyn Wandalen <wtory.net@domainsbyproxy.com>",
+  "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
   "main": "staging/dwtools/abase/layer3/ExecTools.s",
   "files": [
