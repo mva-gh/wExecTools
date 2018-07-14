@@ -1260,6 +1260,15 @@ function appRepairExitHandler()
   return;
   appRepairExitHandlerDone = 1;
 
+  // try
+  // {
+  //   _.errLog( _.err( 'xxx' ) );
+  // }
+  // catch( err2 )
+  // {
+  //   console.log( err2 );
+  // }
+
   process.on( 'SIGINT',function()
   {
     console.log( 'SIGINT' );
@@ -1269,7 +1278,9 @@ function appRepairExitHandler()
     }
     catch( err )
     {
-      console.log( err );
+      console.log( 'Error!' );
+      console.log( err.toString() );
+      console.log( err.stack );
       process.removeAllListeners( 'exit' );
       process.exit();
     }
@@ -1284,7 +1295,9 @@ function appRepairExitHandler()
     }
     catch( err )
     {
-      console.log( err );
+      console.log( 'Error!' );
+      console.log( err.toString() );
+      console.log( err.stack );
       process.removeListener( 'exit' );
       process.exit();
     }
@@ -1299,7 +1312,9 @@ function appRepairExitHandler()
     }
     catch( err )
     {
-      console.log( err );
+      console.log( 'Error!' );
+      console.log( err.toString() );
+      console.log( err.stack );
       process.removeListener( 'exit' );
       process.exit();
     }
