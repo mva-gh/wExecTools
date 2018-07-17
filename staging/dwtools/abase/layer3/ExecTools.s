@@ -1083,6 +1083,9 @@ function appArgsReadTo( o )
   if( !o.appArgs )
   o.appArgs = _.appArgs();
 
+  if( o.dst === null )
+  o.dst = Object.create( null );
+
   _.assert( _.objectIs( o.dst ) );
   _.assert( _.objectIs( o.nameMap ) );
 
