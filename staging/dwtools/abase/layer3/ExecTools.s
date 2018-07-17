@@ -1,6 +1,6 @@
 ( function _ExecTools_s_() {
 
-'use strict'; /**/
+'use strict';
 
 if( typeof module !== 'undefined' )
 {
@@ -534,7 +534,7 @@ function routineMake( o )
   var prefix = '\n';
 
   if( o.usingStrict )
-  prefix += `'use strict'; /**/\n`;
+  prefix += `'use strict';\n`;
   if( o.debug )
   prefix += 'debugger;\n';
   if( o.filePath )
@@ -1131,7 +1131,7 @@ appArgsReadTo.defaults =
   appArgs : null,
   nameMap : null,
   removing : 1,
-  only : 0,
+  only : 1,
 }
 
 //
