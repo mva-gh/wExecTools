@@ -117,19 +117,15 @@ function shell( o )
   }
   catch( err )
   {
+    if( o.verbosity )
+    _.errLogOnce( err );
   }
 
   /* logger */
 
   if( o.verbosity )
   {
-    // debugger;
     logger.log( _.strConcat( _.arrayAppendArray( [ ' >', o.path ], o.args || [] ) ) );
-    // debugger;
-    // if( o.args )
-    // logger.log( o.path, o.args.join( ' ' ) );
-    // else
-    // logger.log( o.path );
   }
 
   /* create process */
@@ -1076,18 +1072,18 @@ function appArgsReadTo( o )
   _.assert( arguments.length === 1 || arguments.length === 2 )
 
   if( arguments[ 1 ] !== undefined )
-  o = { dst : arguments[ 0 ], nameMap : arguments[ 1 ] };
+  o = { dst : arguments[ 0 ], namesMap : arguments[ 1 ] };
 
   o = _.routineOptions( appArgsReadTo,o );
 
   if( !o.appArgs )
   o.appArgs = _.appArgs();
 
-  if( o.dst === null )
-  o.dst = Object.create( null );
+  // if( o.dst === null )
+  // o.dst = Object.create( null );
 
   _.assert( _.objectIs( o.dst ) );
-  _.assert( _.objectIs( o.nameMap ) );
+  _.assert( _.objectIs( o.namesMap ) );
 
   function set( k,v )
   {
@@ -1109,18 +1105,18 @@ function appArgsReadTo( o )
     }
   }
 
-  for( var n in o.nameMap )
+  for( var n in o.namesMap )
   {
     if( o.appArgs.map[ n ] !== undefined )
     {
-      set( o.nameMap[ n ], o.appArgs.map[ n ] );
+      set( o.namesMap[ n ], o.appArgs.map[ n ] );
       delete o.appArgs.map[ n ];
     }
   }
 
   if( o.only )
   {
-    var but = Object.keys( _.mapBut( o.appArgs.map, o.nameMap ) );
+    var but = Object.keys( _.mapBut( o.appArgs.map, o.namesMap ) );
     if( but.length )
     throw _.err( 'Unknown application arguments : ' + _.strQuote( but ).join( ', ' ) );
   }
@@ -1132,7 +1128,7 @@ appArgsReadTo.defaults =
 {
   dst : null,
   appArgs : null,
-  nameMap : null,
+  namesMap : null,
   removing : 1,
   only : 1,
 }
