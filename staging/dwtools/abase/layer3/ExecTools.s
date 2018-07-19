@@ -48,7 +48,7 @@ var _ObjectToString = Object.prototype.toString;
 var _ObjectHasOwnProperty = Object.hasOwnProperty;
 
 var _assert = _.assert;
-var _arraySlice = _.arraySlice;
+var _arraySlice = _.longSlice;
 
 _.assert( _realGlobal_ );
 
@@ -768,7 +768,7 @@ makeWorker.defaults =
 // {
 //   _assert( arguments.length >= 3,'execAsyn :','expects 3 arguments or more' );
 //
-//   var args = arraySlice( arguments,3 ); throw _.err( 'not tested' );
+//   var args = longSlice( arguments,3 ); throw _.err( 'not tested' );
 //
 //   _.timeOut( 0,function()
 //   {
@@ -794,7 +794,7 @@ function execStages( stages,o )
 
   /* validation */
 
-  _.assert( _.objectIs( stages ) || _.arrayLike( stages ),'expects array or object ( stages ), but got',_.strTypeOf( stages ) );
+  _.assert( _.objectIs( stages ) || _.longIs( stages ),'expects array or object ( stages ), but got',_.strTypeOf( stages ) );
 
   for( var s in stages )
   {
@@ -967,7 +967,7 @@ function _appArgsInSamFormatNodejs( o )
   if( _global.process )
   {
     if( o.argv )
-    _.assert( _.arrayLike( o.argv ) );
+    _.assert( _.longIs( o.argv ) );
 
     var argv = o.argv || process.argv;
 
