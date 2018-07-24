@@ -109,7 +109,7 @@ function shell( o )
   if( !ChildProcess )
   ChildProcess = require( 'child_process' );
 
-  if( o.outputColoring && typeof module !== 'undefined' )
+  if( !o.outputGray && typeof module !== 'undefined' )
   try
   {
     _.include( 'wLogger' );
@@ -226,7 +226,7 @@ function shell( o )
     if( o.outputPrefixing )
     data = 'stdout :\n' + _.strIndentation( data,'  ' );
 
-    if( _.color && o.outputColoring )
+    if( _.color && !o.outputGray )
     data = _.color.strFormat( data,'pipe.neutral' );
 
     logger.log( data );
@@ -248,7 +248,7 @@ function shell( o )
     if( o.outputPrefixing )
     data = 'stderr :\n' + _.strIndentation( data,'  ' );
 
-    if( _.color && o.outputColoring )
+    if( _.color && !o.outputGray )
     data = _.color.strFormat( data,'pipe.negative' );
 
     logger.warn( data );
@@ -334,7 +334,7 @@ shell.defaults =
   throwingExitCode : 1, /* must be on by default */
   applyingExitCode : 0,
 
-  outputColoring : 1,
+  outputGray : 0,
   outputPrefixing : 1,
   outputPiping : 1,
   outputCollecting : 0,
@@ -1082,8 +1082,8 @@ function appArgsReadTo( o )
   // if( o.dst === null )
   // o.dst = Object.create( null );
 
-  _.assert( _.objectIs( o.dst ) );
-  _.assert( _.objectIs( o.namesMap ) );
+  _.assert( _.objectIs( o.dst ), 'expects map {-o.dst-}' );
+  _.assert( _.objectIs( o.namesMap ), 'expects map {-o.namesMap-}' );
 
   function set( k,v )
   {
