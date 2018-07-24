@@ -1079,9 +1079,6 @@ function appArgsReadTo( o )
   if( !o.appArgs )
   o.appArgs = _.appArgs();
 
-  // if( o.dst === null )
-  // o.dst = Object.create( null );
-
   _.assert( _.objectIs( o.dst ), 'expects map {-o.dst-}' );
   _.assert( _.objectIs( o.namesMap ), 'expects map {-o.namesMap-}' );
 
@@ -1118,7 +1115,11 @@ function appArgsReadTo( o )
   {
     var but = Object.keys( _.mapBut( o.appArgs.map, o.namesMap ) );
     if( but.length )
-    throw _.err( 'Unknown application arguments : ' + _.strQuote( but ).join( ', ' ) );
+    {
+      o.appArgs.err = _.err( 'Unknown application arguments : ' + _.strQuote( but ).join( ', ' ) );
+      if( o.throwing )
+      throw o.appArgs.err;
+    }
   }
 
   return o.appArgs;
@@ -1131,6 +1132,7 @@ appArgsReadTo.defaults =
   namesMap : null,
   removing : 1,
   only : 1,
+  throwing : 1,
 }
 
 //
