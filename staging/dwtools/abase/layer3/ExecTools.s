@@ -150,7 +150,7 @@ function shell( o )
 
       if( !o.args )
       {
-        o.args = _.strSplit( o.path );
+        o.args = _.strSplitNonPreserving/**1**/({ src : o.path, preservingDelimeters : 0 });
         app = o.args.shift();
       }
       else
@@ -164,7 +164,7 @@ function shell( o )
         */
 
         if( app.length )
-        _.assert( _.strSplit( app ).length === 1, ' o.path must not contain arguments if those were provided through options' )
+        _.assert( _.strSplitNonPreserving/**1**/({ src : app, preservingDelimeters : 0 }).length === 1, ' o.path must not contain arguments if those were provided through options' )
       }
 
       o.process = ChildProcess.spawn( app,o.args,optionsForSpawn );
@@ -962,74 +962,95 @@ function _appArgsInSamFormatNodejs( o )
 
   if( _global.process )
   {
-    if( o.argv )
+    o.argv = o.argv || process.argv;
+
     _.assert( _.longIs( o.argv ) );
 
-    var argv = o.argv || process.argv;
-
-    result.interpreterPath = _.pathNormalize( argv[ 0 ] );
-    result.mainPath = _.pathNormalize( argv[ 1 ] );
+    result.interpreterPath = _.pathNormalize( o.argv[ 0 ] );
+    result.mainPath = _.pathNormalize( o.argv[ 1 ] );
     result.interpreterArgs = process.execArgv;
     result.delimeter = o.delimeter;
     result.map = Object.create( null );
     result.subject = '';
-    result.scriptArgs = argv.slice( 2 );
+
+    debugger;
+
+    // if( !result.scriptArgs.length )
+    // return result;
+    //
+    // var scriptArgs = [];
+    // result.scriptArgs.forEach( function( arg, pos )
+    // {
+    //   if( arg.length > 1 && arg.indexOf( o.delimeter ) !== -1 )
+    //   {
+    //     var argSplitted = _.strSplit/**1**/
+    //     ({
+    //       src : arg,
+    //       delimeter : o.delimeter,
+    //       stripping : 1,
+    //       preservingDelimeters : 1,
+    //       preservingEmpty : 1,
+    //     })
+    //     scriptArgs.push.apply( scriptArgs, argSplitted );
+    //   }
+    //   else
+    //   {
+    //     scriptArgs.push( arg );
+    //   }
+    // })
+    //
+    // result.scriptArgs = scriptArgs;
+    //
+    // if( result.scriptArgs.length === 1 )
+    // {
+    //   result.subject = result.scriptArgs[ 0 ];
+    //   return result;
+    // }
+
+    // var i = result.scriptArgs.indexOf( o.delimeter );
+    // if( i > 1 )
+    // {
+    //   var part = result.scriptArgs.slice( 0, i - 1 );
+    //   var subject = part.join( ' ' );
+    //   // var regexp = new RegExp( '.?\h*\\' + o.delimeter + '\\h*.?' );
+    //   // if( !regexp.test( subject ) )
+    //   result.subject = subject;
+    // }
+    //
+    // if( i < 0 )
+    // result.subject = result.scriptArgs.shift();
+
+    result.scriptArgs = o.argv.slice( 2 );
     result.scriptString = result.scriptArgs.join( ' ' );
+    result.scriptString = result.scriptString.trim();
 
-    if( !result.scriptArgs.length )
+    if( !result.scriptString )
     return result;
 
-    var scriptArgs = [];
-    result.scriptArgs.forEach( function( arg, pos )
-    {
-      if( arg.length > 1 && arg.indexOf( o.delimeter ) !== -1 )
-      {
-        var argSplitted = _.strSplit({ src : arg, delimeter : o.delimeter, stripping : 1, preservingDelimeters : 1 })
-        scriptArgs.push.apply( scriptArgs, argSplitted );
-      }
-      else
-      scriptArgs.push( arg );
-    })
+    // var splitted = _.strSplit/**1**/
+    // ({
+    //   src : result.scriptString,
+    //   delimeter : o.delimeter,
+    //   stripping : 1,
+    //   preservingDelimeters : 0,
+    //   preservingEmpty : 0,
+    // });
+    //
+    // if( splitted.length === 1 )
+    // {
+    //   result.subject = splitted[ 0 ];
+    //   return result;
+    // }
 
-    result.scriptArgs = scriptArgs;
-
-    if( result.scriptArgs.length === 1 )
-    {
-      result.subject = result.scriptArgs[ 0 ];
-      return result;
-    }
-
-    var i =  result.scriptArgs.indexOf( o.delimeter );
-    if( i > 1 )
-    {
-      var part = result.scriptArgs.slice( 0, i - 1 );
-      var subject = part.join( ' ' );
-      var regexp = new RegExp( '.?\h*\\' + o.delimeter + '\\h*.?' );
-      if( !regexp.test( subject ) )
-      result.subject = subject;
-    }
-
-    if( i < 0 )
-    result.subject = result.scriptArgs.shift();
-
-    var args = result.scriptArgs.join( ' ' );
-    args = args.trim();
-
-    if( !args )
-    return result;
-
-    var splitted = _.strSplit({ src : args, delimeter : o.delimeter, stripping : 1 });
-
-    if( splitted.length === 1 )
-    {
-      result.subject = splitted[ 0 ];
-      return result;
-    }
-
-    _.assert( _.strCutOffAllLeft( splitted[ 0 ],' ' ).length === 3 )
-    splitted[ 0 ] = _.strCutOffAllLeft( splitted[ 0 ],' ' )[ 2 ];
-
-    result.map = _.strParseMap( splitted.join( ':' ) );
+    debugger;
+    var cuts1 = _.strCutOffAllRight( result.scriptString, ':' );
+    debugger;
+    var cuts2 = _.strCutOffAllLeft( cuts1[ 0 ], ' ' );
+    result.subject = cuts2[ 0 ];
+    cuts1[ 0 ] = cuts2[ 2 ];
+    debugger;
+    result.map = _.strParseMap( cuts1.join( '' ) );
+    debugger;
 
   }
 
