@@ -973,8 +973,6 @@ function _appArgsInSamFormatNodejs( o )
     result.map = Object.create( null );
     result.subject = '';
 
-    debugger;
-
     // if( !result.scriptArgs.length )
     // return result;
     //
@@ -1027,30 +1025,28 @@ function _appArgsInSamFormatNodejs( o )
     if( !result.scriptString )
     return result;
 
-    // var splitted = _.strSplit/**1**/
-    // ({
-    //   src : result.scriptString,
-    //   delimeter : o.delimeter,
-    //   stripping : 1,
-    //   preservingDelimeters : 0,
-    //   preservingEmpty : 0,
-    // });
-    //
-    // if( splitted.length === 1 )
-    // {
-    //   result.subject = splitted[ 0 ];
-    //   return result;
-    // }
+    /* should be strSplit, but not strIsolateBeginOrAll because of quoting */
 
-    debugger;
-    var cuts1 = _.strCutOffAllRight( result.scriptString, ':' );
-    debugger;
-    var cuts2 = _.strCutOffAllLeft( cuts1[ 0 ], ' ' );
+    var cuts1 = _.strSplit
+    ({
+      src : result.scriptString,
+      delimeter : o.delimeter,
+      stripping : 1,
+      quoting : 1,
+      preservingDelimeters : 1,
+      preservingEmpty : 0,
+    });
+
+    if( cuts1.length === 1 )
+    {
+      result.subject = cuts1[ 0 ];
+      return result;
+    }
+
+    var cuts2 = _.strIsolateEndOrAll( cuts1[ 0 ], ' ' );
     result.subject = cuts2[ 0 ];
     cuts1[ 0 ] = cuts2[ 2 ];
-    debugger;
     result.map = _.strParseMap( cuts1.join( '' ) );
-    debugger;
 
   }
 
