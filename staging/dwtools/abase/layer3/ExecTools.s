@@ -125,7 +125,10 @@ function shell( o )
 
   if( o.verbosity )
   {
-    logger.log( _.strConcat( _.arrayAppendArray( [ ' >', o.path ], o.args || [] ) ) );
+    var prefix = ' >';
+    if( !o.outputGray )
+    prefix = _.color.strFormat( prefix, { fg : 'bright white' } );
+    logger.log( _.strConcat( _.arrayAppendArray( [ prefix, o.path ], o.args || [] ) ) );
   }
 
   /* create process */
@@ -279,7 +282,7 @@ function shell( o )
     o.exitCode = exitCode;
     o.signal = signal;
 
-    if( o.verbosity >= 3 )
+    if( o.verbosity >= 4 )
     {
       logger.log( 'Process returned error code :',exitCode );
       if( exitCode )
