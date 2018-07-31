@@ -47,10 +47,10 @@ var _FunctionBind = Function.prototype.bind;
 var _ObjectToString = Object.prototype.toString;
 var _ObjectHasOwnProperty = Object.hasOwnProperty;
 
-var _assert = _.assert;
+// var __assert = _.assert;
 var _arraySlice = _.longSlice;
 
-_.assert( _realGlobal_ );
+_.assert( !!_realGlobal_ );
 
 // --
 // exec
@@ -523,7 +523,7 @@ function routineMake( o )
   _.routineOptions( routineMake,o );
   _.assert( arguments.length === 1, 'expects single argument' );
   _.assert( _.objectIs( o.externals ) || o.externals === null );
-  _.assert( _realGlobal_ );
+  _.assert( !!_realGlobal_ );
 
   /* prefix */
 
@@ -762,7 +762,7 @@ makeWorker.defaults =
 
 // function execAsyn( routine,onEnd,context )
 // {
-//   _assert( arguments.length >= 3,'execAsyn :','expects 3 arguments or more' );
+//   _.assert( arguments.length >= 3,'execAsyn :','expects 3 arguments or more' );
 //
 //   var args = longSlice( arguments,3 ); throw _.err( 'not tested' );
 //
@@ -800,8 +800,8 @@ function execStages( stages,o )
     if( o.onRoutine )
     routine = o.onRoutine( routine );
 
-    _.assert( routine || routine === null,'execStages :','#'+s,'stage is not defined' );
-    _.assert( _.routineIs( routine ) || routine === null,'execStages :','stage','#'+s,'does not have routine to execute' );
+    // _.assert( routine || routine === null,'execStages :','#'+s,'stage is not defined' );
+    _.assert( _.routineIs( routine ) || routine === null, () => 'stage' + '#'+s + ' does not have routine to execute' );
 
   }
 
