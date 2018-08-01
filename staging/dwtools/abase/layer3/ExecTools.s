@@ -1066,7 +1066,7 @@ _appArgsInSamFormatNodejs.defaults = Object.create( _appArgsInSamFormat.defaults
 
 function _appArgsInSamFormatBrowser( o )
 {
-  debugger; xxx
+  debugger; /* xxx */
 
   _.assert( arguments.length === 0 || arguments.length === 1 );
   o = _.routineOptions( _appArgsInSamFormatNodejs,arguments );
@@ -1077,11 +1077,13 @@ function _appArgsInSamFormatBrowser( o )
 
   var result = Object.create( null );
 
+  result.map =  Object.create( null );
+
   if( o.caching )
   if( o.delimeter === _appArgsInSamFormatNodejs.defaults.delimeter )
   _appArgsInSamFormatCache = result;
 
-  xxx
+  /* xxx */
 
   return result;
 }
@@ -1284,6 +1286,9 @@ function appRepairExitHandler()
   if( appRepairExitHandlerDone )
   return;
   appRepairExitHandlerDone = 1;
+
+  if( typeof process === 'undefined' )
+  return;
 
   // try
   // {
