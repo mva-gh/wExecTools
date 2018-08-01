@@ -62,10 +62,10 @@ function shell( o )
   if( _.strIs( o ) )
   o = { path : o };
 
-  _.routineOptions( shell,o );
+  _.routineOptions( shell, o );
   _.assert( arguments.length === 1, 'expects single argument' );
-  _.accessorForbid( o,'child' );
-  _.accessorForbid( o,'returnCode' );
+  _.accessorForbid( o, 'child' );
+  _.accessorForbid( o, 'returnCode' );
 
   if( !_.numberIs( o.verbosity ) )
   o.verbosity = o.verbosity ? 1 : 0;
@@ -74,6 +74,8 @@ function shell( o )
 
   if( o.outputPiping === null )
   o.outputPiping = o.verbosity >= 2;
+
+  // console.log( 'shell', o.verbosity, o.outputPiping );
 
   o.con = new _.Consequence();
 
@@ -123,12 +125,14 @@ function shell( o )
 
   /* logger */
 
+  o.argsStr = _.strConcat( _.arrayAppendArray( [ o.path ], o.args || [] ) );
+
   if( o.verbosity )
   {
-    var prefix = ' >';
+    var prefix = ' > ';
     if( !o.outputGray )
     prefix = _.color.strFormat( prefix, { fg : 'bright white' } );
-    logger.log( _.strConcat( _.arrayAppendArray( [ prefix, o.path ], o.args || [] ) ) );
+    logger.log( prefix + o.argsStr );
   }
 
   /* create process */
@@ -282,11 +286,11 @@ function shell( o )
     o.exitCode = exitCode;
     o.signal = signal;
 
-    if( o.verbosity >= 4 )
+    if( o.verbosity >= 5 )
     {
-      logger.log( 'Process returned error code :',exitCode );
+      logger.log( 'Process returned error code :', exitCode );
       if( exitCode )
-      logger.log( 'Launched as :',o.path );
+      logger.log( 'Launched as :', o.path );
     }
 
     if( done )
@@ -307,9 +311,9 @@ function shell( o )
     {
       debugger;
       if( _.numberIs( exitCode ) )
-      o.con.error( _.err( 'Process returned error code :',exitCode,'\nLaunched as :',o.path ) );
+      o.con.error( _.err( 'Process returned error code :', exitCode, '\nLaunched as :', _.strQuote( o.argsStr ) ) );
       else
-      o.con.error( _.err( 'Process wass killed by signal :',signal,'\nLaunched as :',o.path ) );
+      o.con.error( _.err( 'Process wass killed by signal :', signal, '\nLaunched as :', _.strQuote( o.argsStr ) ) );
     }
     else
     {
@@ -338,7 +342,7 @@ shell.defaults =
   applyingExitCode : 0,
 
   outputGray : 0,
-  outputPrefixing : 1,
+  outputPrefixing : 0,
   outputPiping : 1,
   outputCollecting : 0,
   verbosity : 1,
