@@ -127,7 +127,7 @@ function shell( o )
 
   o.argsStr = _.strConcat( _.arrayAppendArray( [ o.path ], o.args || [] ) );
 
-  if( o.verbosity )
+  if( o.verbosity && o.outputMirroring )
   {
     var prefix = ' > ';
     if( !o.outputGray )
@@ -341,11 +341,12 @@ shell.defaults =
   throwingExitCode : 1, /* must be on by default */
   applyingExitCode : 0,
 
+  verbosity : 1,
   outputGray : 0,
   outputPrefixing : 0,
   outputPiping : 1,
   outputCollecting : 0,
-  verbosity : 1,
+  outputMirroring : 1,
 
 }
 
@@ -1133,6 +1134,7 @@ function appArgsReadTo( o )
     if( o.appArgs.map[ n ] !== undefined )
     {
       set( o.namesMap[ n ], o.appArgs.map[ n ] );
+      if( o.removing )
       delete o.appArgs.map[ n ];
     }
   }
